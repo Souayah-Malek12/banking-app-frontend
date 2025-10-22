@@ -1,0 +1,45 @@
+<div class="users-container">
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="loading">
+      Loading Users
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="error" class="error">
+    {{ error }}
+  </div>
+
+  <!-- Users table -->
+  <table *ngIf="!loading && !error && usersList.length > 0" class="users-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Full Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Address</th>
+        <th>Role</th>
+        <th>Accounts</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let u of usersList; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ u.fullName }}</td>
+        <td>{{ u.email }}</td>
+        <td>{{ u.phoneNumber || '-' }}</td>
+        <td>{{ u.address || '-' }}</td>
+        <td>{{ u.role }}</td>
+        <td>{{ u.accounts.length || '-' }} <button *ngIf="u.accounts.length !=0" (click)="getUserAccounts(u.id)">Get Account(s)</button></td>
+
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- No users found -->
+  <div *ngIf="!loading && !error && usersList.length === 0" class="no-users">
+    No users found.
+  </div>
+
+</div>

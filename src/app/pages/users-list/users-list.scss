@@ -1,0 +1,41 @@
+.users-container {
+  max-width: 800px;
+  margin: 30px auto;
+  font-family: "Poppins", sans-serif;
+
+  .loading,
+  .error,
+  .no-users {
+    text-align: center;
+    margin: 15px 0;
+    font-size: 16px;
+  }
+
+  .error {
+    color: #dc3545;
+  }
+
+  .users-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f5f5f5;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+  }
+}
