@@ -9,30 +9,71 @@
   <div *ngIf="error" class="error">
     {{ error }}
   </div>
+  <div>
+    <div>
+      <h2>Get User By id</h2>
+     <input type="number" [(ngModel)]="selectedId" placeholder="Enter user ID">
+<button (click)="searchUser(selectedId!)">Search</button>
 
+  </div>
+    <div *ngIf="selectedUser">
+      <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Id</th>
+          <th>Full Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Address</th>
+          <th>Role</th>
+          <th>Accounts</th>
+          <th>####</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr >
+
+          <td>{{ selectedUser.id }}</td>
+          <td>{{ selectedUser.fullName }}</td>
+          <td>{{ selectedUser.email }}</td>
+          <td>{{ selectedUser.phoneNumber || '-' }}</td>
+          <td>{{ selectedUser.address || '-' }}</td>
+          <td>{{ selectedUser.role }}</td>
+          <td>{{ selectedUser.accounts.length || '-' }} <button *ngIf="selectedUser.accounts.length !=0" (click)="getUserAccounts(selectedUser.id)">Get Account(s)</button></td>
+          <th  ><button (click)="manageAccount(selectedUser.id)"> Manage User</button></th>
+        </tr>
+      </tbody>
+    </table>
+
+    </div>
+  </div>
   <!-- Users table -->
   <table *ngIf="!loading && !error && usersList.length > 0" class="users-table">
     <thead>
       <tr>
         <th>#</th>
+        <th>Id</th>
         <th>Full Name</th>
         <th>Email</th>
         <th>Phone</th>
         <th>Address</th>
         <th>Role</th>
         <th>Accounts</th>
+        <th>####</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let u of usersList; let i = index">
         <td>{{ i + 1 }}</td>
+        <td>{{ u.id }}</td>
         <td>{{ u.fullName }}</td>
         <td>{{ u.email }}</td>
         <td>{{ u.phoneNumber || '-' }}</td>
         <td>{{ u.address || '-' }}</td>
         <td>{{ u.role }}</td>
         <td>{{ u.accounts.length || '-' }} <button *ngIf="u.accounts.length !=0" (click)="getUserAccounts(u.id)">Get Account(s)</button></td>
-
+        <th  ><button (click)="manageAccount(u.id)"> Manage User</button></th>
       </tr>
     </tbody>
   </table>

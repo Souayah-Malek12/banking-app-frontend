@@ -23,10 +23,11 @@ export interface Transaction {
 }
 
 export interface Account {
-  accountHolderName : number;
+  id: number;
+  accountHolderName : string;
   balance : number;
   rib : string;
-  transactions : string[]
+  transactions : Transaction[]
   type: string;
 }
 
@@ -50,14 +51,20 @@ export class UsersService {
   constructor(private http: HttpClient) {}
 
   createUser(user : CreateUserRequest): Observable<UserResponse> {
-    const token = localStorage.getItem('authToken');
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const token = typeof localStorage !== 'undefined'
+    ? localStorage.getItem('authToken')
+    : null;
+
+  const headers = token ? new HttpHeaders().set('Authorization', `Bearer ${token}`) : undefined;
     return this.http.post<UserResponse>(`${this.apiUrl}/users`, user, { headers })
   }
 
   getAllUsers(): Observable<UserResponse[]>{
-    const token = localStorage.getItem('authToken');
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const token = typeof localStorage !== 'undefined'
+    ? localStorage.getItem('authToken')
+    : null;
+
+  const headers = token ? new HttpHeaders().set('Authorization', `Bearer ${token}`) : undefined;
     return this.http.get<UserResponse[]>(`${this.apiUrl}/users`,  { headers });
   }
 
@@ -69,5 +76,14 @@ export class UsersService {
   const headers = token ? new HttpHeaders().set('Authorization', `Bearer ${token}`) : undefined;
 
     return this.http.get<UserResponse>(`${this.apiUrl}/users/${id}`,  { headers });
+  }
+
+  deleteUserById(id :number) : Observable<String> {
+    const token = typeof localStorage !== 'undefined'
+            ? localStorage.getItem('authToken')
+            : null;
+    const headers = token ? new HttpHeaders().set('Authorization', `Bearer ${token}`) : undefined;
+
+    return this.http.delete(`${this.apiUrl}/users/${id}`,  { headers,responseType: 'text' });
   }
 }

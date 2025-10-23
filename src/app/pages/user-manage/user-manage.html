@@ -5,8 +5,9 @@
 <div *ngIf="!loading && !error && user">
 
   <!-- User Info -->
-  <div class="user-info">
+  <div class="user-info" *ngIf=" !loading && !error && user">
     <h2>{{ user.fullName }}</h2>
+    <h1><button (click)="deleteAccount(user.id)">Delete User</button></h1>
     <p><strong>Email:</strong> {{ user.email }}</p>
     <p><strong>Phone:</strong> {{ user.phoneNumber }}</p>
     <p><strong>Address:</strong> {{ user.address }}</p>
@@ -36,14 +37,12 @@
             <td>{{ account.rib }}</td>
             <td>{{ account.type }}</td>
             <td>
-              <button (click)="toggleTransactions(i)">
-                {{ showTransactions[i] ? 'Hide' : 'Show' }}
-              </button>
+
             </td>
           </tr>
 
           <!-- Transactions Table -->
-          <tr *ngIf="showTransactions[i]">
+          <tr >
             <td colspan="6">
               <table class="transactions-table">
                 <thead>
@@ -59,7 +58,7 @@
                     <td>{{ t.id }}</td>
                     <td>{{ t.amount }}</td>
                     <td>{{ t.type }}</td>
-                    <td>{{ t.timestamp | date:'short' }}</td>
+                    <td>{{ t.timestamp }}</td>
                   </tr>
                 </tbody>
               </table>
