@@ -1,1 +1,48 @@
-<p>transactions-list works!</p>
+
+<div *ngIf="loading">Loading transactions...</div>
+<div *ngIf="error">{{ error }}</div>
+
+<div>
+  <div>
+<label for="typeFilter">Filter by Type:</label>
+<select id="typeFilter"   [(ngModel)]="filterType"   >
+  <option value="">All</option>
+  <option value="DEPOSIT">DEPOSIT</option>
+  <option value="WITHDRAW">WITHDRAW</option>
+  <option value="TRANSFER">Transfer</option>
+</select>
+</div>
+<div>
+<label for="typeAmount">Filter by Amount:</label>
+<input type id="typeAmount"   [(ngModel)]="minAmount"   >
+</div>
+
+<div>
+<label for="typeAccId">Filter by AccountId</label>
+<input type id="typeAccId"   [(ngModel)]="accountId"   >
+</div>
+</div>
+
+<h1>List of Transactions</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>type</th>
+
+      <th>AccountID</th>
+      <th>Amount</th>
+      <th>timestamp</th>
+    </tr>
+  </thead>
+  <tbody  *ngIf="transactionsList && !loading && !error">
+    <tr *ngFor="let tx of getFilteredTransaction(); let i= index ">
+      <td>  {{ tx.id}} </td>
+      <td>  {{ tx.type }} </td>
+      <td>  {{ tx.accountId}} </td>
+      <td>  {{ tx.amount}} </td>
+      <td>  {{ tx.timestamp }} </td>
+
+    </tr>
+  </tbody>
+</table>
